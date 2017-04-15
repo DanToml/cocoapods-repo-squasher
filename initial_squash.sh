@@ -10,10 +10,11 @@ clone_repo() {
   if [[ $USE_CIRCLECI_SPECS_MIRROR ]]; then
     echo "> Downloading Repo Script from S3"
     aws s3 --no-sign-request cp "s3://cocoapods-specs/latest.tar.gz" "latest.tar.gz"
-    tar -C Specs -xzf latest.tar.gz
+    tar -xzf latest.tar.gz
+    mv master Specs
   else
     echo "> Cloning CocoaPods/Specs"
-    git clone https://github.com/CocoaPods/Specs.git
+    git clone https://github.com/CocoaPods/Specs.git Specs
   fi
 }
 
