@@ -45,6 +45,13 @@ clean_repo() {
   git_exec gc --prune=now --aggressive
 }
 
+artifact_specs() {
+  if [[ $CI ]]; then
+    tar -czf specs.tar.gz Specs
+    mv specs.tar.gz "$CIRCLE_ARTIFACTS/"
+  fi
+}
+
 clone_repo
 measure_repo
 squash_branch "master"
@@ -60,3 +67,4 @@ tag_sharding_branch
 measure_repo
 clean_repo
 measure_repo
+artifact_specs
