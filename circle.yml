@@ -1,3 +1,7 @@
+dependencies:
+  override:
+    - sudo pip install --ignore-installed awscli
+
 test:
   override:
     - ./initial_squash.sh

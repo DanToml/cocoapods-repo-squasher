@@ -23,5 +23,27 @@ measure_repo() {
   du -sh Specs/.git
 }
 
+squash_branch() {
+  BRANCH_NAME=$1
+  git checkout --orphan "new_$BRANCH_NAME"
+  git add .
+  git commit -m "Squashed!"
+  git branch -D "$BRANCH_NAME"
+  git checkout -b "$BRANCH_NAME"
+  git branch -D "new_$BRANCH_NAME"
+  git checkout master
+}
+
+tag_sharding_branch() {
+  git checkout "predates_sharding_branch"
+  git tag -d "v0.32.1"
+  git tag "v0.32.1"
+  git checkout master 
+}
+
 clone_repo
+measure_repo
+squash_branch "master"
+squash_branch "predates_sharding_branch"
+tag_sharding_branch
 measure_repo
